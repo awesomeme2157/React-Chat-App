@@ -6,29 +6,34 @@ import Notification from "./components/notification/Notification";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./lib/firebase";
 import { useEffect } from "react";
+import { useUserStore } from "./lib/userStore";
+import { useChatStore } from "./lib/chatStore";
 
 const App = () => {
-  const user = false;
+  const { currentUser, isLoading, fetchUserInfo } = useUserStore();
+  const { chatId } = useChatStore();
 
   // cleanup function provides us with the latest user logged in/ activity happened
   // just as name suggest - onAuth State change
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (user) => {
-      console.log(user);
+      fetchUserInfo(user?.uid);
     });
 
     return () => {
       unSub();
     };
-  }, []);
+  }, [fetchUserInfo]);
+
+  if (isLoading) return <div className="loading">Loading...</div>;
 
   return (
     <div className="container">
-      {user ? (
+      {currentUser ? (
         <>
           <List />
-          <Chat />
-          <Detail />
+          {chatId && <Chat />}
+          {chatId && <Detail />}
         </>
       ) : (
         <>
