@@ -39,7 +39,6 @@
                     font-size: 14px;
                     font-weight: 300;
                     color: #a5a5a5;
-                    /* can be color: #d6d4d4 */
                 }
             }
         }
@@ -58,25 +57,27 @@
     .center {
         padding: 20px;
         flex: 1;
-        overflow: scroll;
+        overflow-y: auto;
         display: flex;
         flex-direction: column;
         gap: 20px;
 
         .message {
+            display: inline-flex;
+            /* Adjusts width based on content */
             max-width: 70%;
-            display: flex;
-            gap: 20px;
+            /* Limits maximum width */
+            word-wrap: break-word;
+            /* Ensures long words wrap within the bubble */
+            border-radius: 10px;
 
             &.own {
                 align-self: flex-end;
 
-                .texts {
-                    p {
-                        background-color: #5183fe;
-                    }
-
-                    span {}
+                .texts p {
+                    background-color: #5183fe;
+                    color: white;
+                    /* Changes text color for contrast */
                 }
             }
 
@@ -88,8 +89,7 @@
             }
 
             .texts {
-                flex: 1;
-                display: flex;
+                display: inline-flex;
                 flex-direction: column;
                 gap: 5px;
 
@@ -98,20 +98,21 @@
                     height: 300%;
                     border-radius: 10px;
                     object-fit: cover;
-                    /* padding-bottom: 10px; */
                 }
 
                 p {
-                    padding: 20px;
+                    padding: 10px 15px;
+                    /* Adjust padding as needed */
                     background-color: rgba(17, 25, 40, 0.3);
                     border-radius: 10px;
+                    max-width: 100%;
+                    /* Ensures it respects max-width in parent */
                 }
 
                 span {
                     font-size: 13px;
                 }
             }
-
         }
     }
 
@@ -130,7 +131,6 @@
         }
 
         img {
-            /* can be 24px */
             width: 20px;
             height: 20px;
             cursor: pointer;
@@ -145,6 +145,10 @@
             padding: 20px;
             border-radius: 10px;
             font-size: 16px;
+
+            &:disabled {
+                cursor: not-allowed;
+            }
         }
 
         .emoji {
@@ -164,6 +168,11 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+
+            &:disabled {
+                background-color: #5182feb4;
+                cursor: not-allowed;
+            }
         }
     }
 }
